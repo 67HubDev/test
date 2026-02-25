@@ -34,16 +34,24 @@ if not game:IsLoaded() then
 end
 
 ----------------------------------------------------------------
+-- [FIX] ĐỢI NHÂN VẬT XUẤT HIỆN ĐỂ TRÁNH LỖI CRASH NGẦM
+----------------------------------------------------------------
+local Players = game:GetService("Players")
+repeat task.wait(0.2) until Players.LocalPlayer
+local LocalPlayer = Players.LocalPlayer
+
+----------------------------------------------------------------
 -- HỆ THỐNG GLOBAL BAN (KIỂM TRA TRƯỚC KHI CHẠY)
 ----------------------------------------------------------------
 local BannedUsers = {
     [123456789] = "Lý do: Sử dụng bản crack", -- Ví dụ ID bị ban
 }
 
-if BannedUsers[game:GetService("Players").LocalPlayer.UserId] then
-    game:GetService("Players").LocalPlayer:Kick("❌ Bạn đã bị Global Ban khỏi 6_7 HUB. Lý do: " .. BannedUsers[game:GetService("Players").LocalPlayer.UserId])
+if BannedUsers[LocalPlayer.UserId] then
+    LocalPlayer:Kick("❌ Bạn đã bị Global Ban khỏi 6_7 HUB.\nLý do: " .. BannedUsers[LocalPlayer.UserId])
     return
 end
+
 ----------------------------------------------------------------
 -- HỆ THỐNG TỰ ĐỘNG DỌN DẸP (ANTI-RE-EXECUTE)
 ----------------------------------------------------------------
@@ -1228,4 +1236,5 @@ Player.Idled:Connect(function()
         end)
     end
 end)
+
 
